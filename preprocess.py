@@ -25,6 +25,9 @@ def process_posts(raw_file_path, processed_file_path=None):
 
 
 def extract_metadata(post):
+    # strip lone surrogates that break UTF-8 encoding when sent to the API
+    post = post.encode('utf-8', 'ignore').decode('utf-8')
+
     template = '''
     You are given a LinkedIn post. You need to extract number of lines, language of the post and tags.
     1. Return a valid JSON. No preamble. 
